@@ -26,7 +26,7 @@ export default function GameRoomScreen() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasHistory = useRef<string[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#ffffff'); 
+  const [color, setColor] = useState('#000000'); 
   const [brushSize, setBrushSize] = useState(5);
   const lastPos = useRef<{x: number, y: number} | null>(null);
 
