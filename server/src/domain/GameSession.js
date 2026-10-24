@@ -30,7 +30,7 @@ class GameSession {
     }
 
     joinSession(socketId, displayName) {
-        if (this.activeParticipants.size >= this.sessionConfig.maxCapacity) {
+        if (this.activeParticipants.size > this.sessionConfig.maxCapacity) {
             throw new Error('Session has reached maximum capacity');
         }
         const newParticipant = new Participant(socketId, displayName);

@@ -5,8 +5,8 @@ import { useSearchParams, useParams } from 'next/navigation';
 import { socket } from '@/lib/socket';
 
 export default function GameRoomScreen() {
-  const params = useParams(); 
-  const roomId = params.id as string; 
+  const params = useParams();
+  const roomId = (params.id as string).trim().toUpperCase();
   const searchParams = useSearchParams();
   const playerName = searchParams.get('name') || 'Player';
 

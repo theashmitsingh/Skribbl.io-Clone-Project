@@ -7,14 +7,16 @@ class SessionEngine {
     }
 
     initializeSession(adminId, config, io) {
-        const sessionId = nanoid(6); 
+        const sessionId = nanoid(6).toUpperCase();
         const newSession = new GameSession(sessionId, adminId, config, io);
         this.activeSessions.set(sessionId, newSession);
         return newSession;
     }
 
     fetchSession(sessionId) {
-        return this.activeSessions.get(sessionId);
+        if (typeof sessionId !== 'string') return undefined;
+        const normalizedId = sessionId.trim().toUpperCase();
+        return this.activeSessions.get(normalizedId);
     }
 
     terminateSession(sessionId) {

@@ -35,30 +35,44 @@ io.on('connection', (socket) => {
     });
 
     socket.on('join_room', (payload, callback) => {
-        try {
-            const { roomId, playerName } = payload;
-            const session = sessionEngine.fetchSession(roomId);
-            
-            if (!session) throw new Error('Session unavailable or expired');
-            
-            const participant = session.joinSession(socket.id, playerName);
-            socket.join(roomId);
-            
-            // Send the updated list to everyone in the room
-            io.to(roomId).emit('update_players', session.getParticipantRoster());
+    try {
+        const { roomId, playerName } = payload;
 
-            // System message for other players
-            socket.to(roomId).emit('chat_message', {
-                playerName: 'System',
-                text: `${playerName} joined the game!`,
-                type: 'system'
-            });
+        const normalizedRoomId = roomId.trim().toUpperCase();
 
-            callback({ success: true });
-        } catch (error) {
-            callback({ success: false, message: error.message });
+        console.log('Room ID received:', roomId);
+        console.log('Normalized Room ID:', normalizedRoomId);
+
+        const session = sessionEngine.fetchSession(normalizedRoomId);
+
+        if (!session) {
+            throw new Error('Session unavailable or expired');
         }
-    });
+
+        session.joinSession(socket.id, playerName);
+
+        // Use the actual stored session ID
+        socket.join(session.sessionId);
+
+        io.to(session.sessionId).emit(
+            'update_players',
+            session.getParticipantRoster()
+        );
+
+        socket.to(session.sessionId).emit('chat_message', {
+            playerName: 'System',
+            text: `${playerName} joined the game!`,
+            type: 'system'
+        });
+
+        callback({ success: true });
+    } catch (error) {
+        callback({
+            success: false,
+            message: error.message
+        });
+    }
+});
 
     // Phase 2: Gameplay and Drawing Events
 
