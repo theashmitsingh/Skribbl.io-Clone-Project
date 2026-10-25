@@ -54,7 +54,7 @@ node src/main.js
 ```
 
 The backend runs on port `4000` by default.
-Deployed Backend Link (Render) - https://skribbl-io-clone-project.onrender.com/
+Deployed Backend Link (Render) - https://skribbl-io-clone-project.onrender.com
 
 ### 3. Start the Frontend
 
@@ -67,7 +67,7 @@ npm run dev
 ```
 
 Now open the local URL shown in your terminal, `http://localhost:3000`.
-Deployed Frontend Link (Vercel) - https://client-five-flame-32.vercel.app/
+Deployed Frontend Link (Vercel) - https://client-five-flame-32.vercel.app
 
 Make sure the frontend is connected to the correct backend URL.
 
